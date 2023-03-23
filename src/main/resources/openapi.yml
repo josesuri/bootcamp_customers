@@ -1,0 +1,362 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI customers
+  version: v0
+servers:
+  - url: http://localhost:8083/
+    description: Generated server url
+paths:
+  /person:
+    get:
+      tags:
+        - person-controller
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+    put:
+      tags:
+        - person-controller
+      operationId: updatePerson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+    post:
+      tags:
+        - person-controller
+      operationId: createPerson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+  /company:
+    get:
+      tags:
+        - company-controller
+      operationId: getAll_1
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+    put:
+      tags:
+        - company-controller
+      operationId: updateCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+    post:
+      tags:
+        - company-controller
+      operationId: createCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+  /person/vip:
+    post:
+      tags:
+        - person-controller
+      operationId: requestProfileVip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponseDto'
+  /company/pyme:
+    post:
+      tags:
+        - company-controller
+      operationId: requestProfilePyme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRequestDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponseDto'
+  /person/{personId}:
+    get:
+      tags:
+        - person-controller
+      operationId: getPersonById
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Person'
+    delete:
+      tags:
+        - person-controller
+      operationId: deletePerson
+      parameters:
+        - name: personId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Message'
+  /company/{companyId}:
+    get:
+      tags:
+        - company-controller
+      operationId: getCompanyById
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Company'
+    delete:
+      tags:
+        - company-controller
+      operationId: deleteCompany
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Message'
+components:
+  schemas:
+    PersonRequestDto:
+      required:
+        - dni
+        - email
+        - lastName
+        - name
+        - telephone
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        lastName:
+          type: string
+        dni:
+          type: string
+        email:
+          type: string
+        telephone:
+          type: string
+        typeCustomer:
+          type: string
+        typeProfile:
+          type: string
+    Person:
+      required:
+        - dni
+        - email
+        - lastName
+        - name
+        - telephone
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        lastName:
+          type: string
+        dni:
+          type: string
+        email:
+          type: string
+        telephone:
+          type: string
+        typeCustomer:
+          type: string
+        typeProfile:
+          type: string
+    AuthorizedDto:
+      required:
+        - dni
+        - email
+        - lastName
+        - name
+        - telephone
+      type: object
+      properties:
+        name:
+          type: string
+        lastName:
+          type: string
+        dni:
+          type: string
+        email:
+          type: string
+        telephone:
+          type: string
+    CompanyRequestDto:
+      required:
+        - businessName
+        - email
+        - headlines
+        - ruc
+        - telephone
+      type: object
+      properties:
+        id:
+          type: string
+        businessName:
+          type: string
+        ruc:
+          type: string
+        email:
+          type: string
+        telephone:
+          type: string
+        headlines:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedDto'
+        signatories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedDto'
+        typeCustomer:
+          type: string
+        typeProfile:
+          type: string
+    Company:
+      required:
+        - businessName
+        - email
+        - headlines
+        - ruc
+        - telephone
+      type: object
+      properties:
+        id:
+          type: string
+        businessName:
+          type: string
+        ruc:
+          type: string
+        email:
+          type: string
+        telephone:
+          type: string
+        headlines:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedDto'
+        signatories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedDto'
+        typeCustomer:
+          type: string
+        typeProfile:
+          type: string
+    PersonResponseDto:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+        message:
+          type: string
+    CompanyResponseDto:
+      type: object
+      properties:
+        company:
+          $ref: '#/components/schemas/Company'
+        message:
+          type: string
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
